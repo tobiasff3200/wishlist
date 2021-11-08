@@ -1,0 +1,38 @@
+<!-- templates/registration/login.html -->
+{% extends 'base.html' %}
+
+{% block title %}Anmelden{% endblock %}
+
+{% block content %}
+	<h1>Log In</h1>
+	<form method="post" class="form-control">
+		{% csrf_token %}
+		{{ form }}
+		<button type="submit">Anmelden</button>
+	</form>
+	<style>
+		#id_username, #id_password {
+			flex-shrink                : 1;
+			transition-property        : background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+			transition-duration        : .15s;
+			transition-duration        : .2s;
+			transition-timing-function : cubic-bezier(.4, 0, .2, 1);
+			height                     : 3rem;
+			font-size                  : .875rem;
+			line-height                : 1.25rem;
+			line-height                : 2;
+			padding-left               : 1rem;
+			padding-right              : 1rem;
+			--tw-bg-opacity            : 1;
+			background-color           : hsla(var(--b1)/var(--tw-bg-opacity, 1));
+			--tw-border-opacity        : 1;
+			--tw-border-opacity        : 0;
+			border-color               : hsla(var(--bc)/var(--tw-border-opacity, 1));
+			border-width               : 1px;
+			border-radius              : var(--rounded-btn, .5rem);
+			--tw-border-opacity        : 0.2;
+		}
+
+
+	</style>
+{% endblock %}

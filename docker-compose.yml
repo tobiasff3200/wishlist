@@ -1,0 +1,28 @@
+version: "3"
+services:
+  wishlist:
+    container_name: wishlist
+    image: registry.gitlab.fachschaften.org/tobiasff3200/wishlist
+    restart: always
+    ports:
+      - "8081:8000"
+    volumes:
+      - /var/lib/docker/volumes/examgenerator-db/:/app/db/
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/timezone:/etc/timezone:ro
+      - /root/.docker/config.json:/config.json
+    environment:
+      - WATCHTOWER_CLEANUP=true
+      - WATCHTOWER_LABEL_ENABLE=true
+      - WATCHTOWER_INCLUDE_RESTARTING=true
+      - WATCHTOWER_POLL_INTERVAL=600
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"

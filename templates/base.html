@@ -1,0 +1,52 @@
+<!-- templates/base.html -->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{% block title %}Wunschliste{% endblock %}</title>
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@1.16.2/dist/full.css" rel="stylesheet" type="text/css" />
+	<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2/dist/tailwind.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="navbar mb-2 shadow-lg bg-neutral text-neutral-content rounded-box">
+	<div class="px-2 mx-2 navbar-start">
+        <span class="text-lg font-bold">
+	        Wunschzettel
+		</span>
+	</div>
+	<div class="hidden px-2 mx-2 navbar-center lg:flex">
+		<div class="flex items-stretch">
+			{% block header %}
+			{% endblock %}
+		</div>
+	</div>
+	<div class="navbar-end">
+		{% if user.is_authenticated %}
+			<div class="dropdown dropdown-end lg:hidden">
+				<div tabindex="0" class="btn btn-ghost rounded-btn">
+					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+					     class="inline-block w-6 h-6 stroke-current">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+						      d="M4 6h16M4 12h16M4 18h16"></path>
+					</svg>
+				</div>
+				<div>
+					{% block header_small %}
+					{% endblock %}
+				</div>
+			</div>
+
+			<button class="btn btn-ghost btn-sm rounded-btn hidden lg:flex">
+				<a href="{% url 'logout' %}">{{ user.username }} abmelden</a>
+			</button>
+		{% endif %}
+	</div>
+</div>
+<main>
+	<div class="p-4">
+		{% block content %}
+		{% endblock %}
+	</div>
+</main>
+</body>
+</html>

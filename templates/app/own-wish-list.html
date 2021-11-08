@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Wunschliste{% endblock %}
+
+{% block header %}
+	<ul class="menu items-stretch px-3 shadow-lg  horizontal rounded-box ">
+		{% for user in all_users %}
+			{% if user == list_owner %}
+				<li class="bordered">
+					{% else %}
+				<li>
+			{% endif %}
+		<a class="" href="{% url 'wishList' user.id %}">
+			{{ user.username }}
+		</a>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block header_small %}
+	<ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
+		{% for user in all_users %}
+			{% if user == list_owner %}
+				<li class="bordered">
+					{% else %}
+				<li>
+			{% endif %}
+		<a class="" href="{% url 'wishList' user.id %}">
+			{{ user.username }}
+		</a>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block content %}
+	<form action="{% url 'newOwnWish' %}" method="post" class="">
+		{% csrf_token %}
+		<input type="hidden" name="list_owner" value="{{ list_owner.id }}">
+		<label class="label" for="wish-text"><span class="label-text">Neuer Wunsch</span></label>
+		<input type="text" id="wish-text" name="wish-text" class="input input-bordered">
+		<input type="submit" value="Hinzufügen" class="btn">
+	</form>
+	<div>
+		{% for wish in wishes %}
+			<div class="card shadow-lg compact">
+				<div class="card-body">
+					<h2 class="card-title">
+						{{ wish.text }}
+						{% if wish.wish_for != user and wish.reserved_by %}
+							<div class="badge">
+								Reserviert von {{ wish.reserved_by.username }}
+							</div>
+						{% endif %}
+					</h2>
+					<div class="card-actions">
+						{% if wish.owner == user %}
+							<a class="btn btn-sm" href="{% url 'deleteWish' wish.id %}?list_owner={{ list_owner.id }}">Löschen</a>{% endif %}
+						{% if wish.wish_for != user and not wish.reserved_by %}
+							<a class="btn btn-sm" href="{% url 'reserveWish' wish.id %}?list_owner={{ list_owner.id }}">Reservieren</a>{% endif %}
+						{% if wish.wish_for != user and user == wish.reserved_by %}
+							<a class="btn btn-sm"
+							   href="{% url 'cancelReserveWish' wish.id %}?list_owner={{ list_owner.id }}">
+								Nicht mehr reservieren
+							</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>            {% endfor %}
+		{% if wishes|length == 0 %}
+			Keine Wünsche vorhanden.
+		{% endif %}
+	</div>
+{% endblock %}
