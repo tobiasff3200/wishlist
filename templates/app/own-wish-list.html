@@ -39,9 +39,13 @@
 		{% csrf_token %}
 		<input type="hidden" name="list_owner" value="{{ list_owner.id }}">
 		<label class="label" for="wish-text"><span class="label-text">Neuer Wunsch</span></label>
-		<input type="text" id="wish-text" name="wish-text" class="input input-bordered">
+		<input type="text" id="wish-text" name="wish-text" class="input input-bordered" required>
+		<label class="label" for="wish-link"><span class="label-text">Link</span></label>
+		<input type="url" id="wish-link" name="wish-link" class="input input-bordered">
+		<br>
 		<input type="submit" value="Hinzufügen" class="btn">
 	</form>
+	<br>
 	<div>
 		{% for wish in wishes %}
 			<div class="card shadow-lg compact">
@@ -54,6 +58,11 @@
 							</div>
 						{% endif %}
 					</h2>
+					{% if wish.link %}
+						<div>
+							<a href="{{ wish.link }}">Link</a>
+						</div>
+					{% endif %}
 					<div class="card-actions">
 						{% if wish.owner == user %}
 							<a class="btn btn-sm" href="{% url 'deleteWish' wish.id %}?list_owner={{ list_owner.id }}">Löschen</a>{% endif %}

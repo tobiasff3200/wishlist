@@ -28,12 +28,13 @@ def wishListView(request, list_user):
 	              context={'wishes': wishes, 'list_owner': list_owner, 'all_users': users})
 
 
-def newOwnWishView(request):
+def newWishView(request):
 	if not request.user.is_authenticated:
 		return HttpResponseRedirect(reverse('ownList'), status=401)
 	text = request.POST['wish-text']
+	link = request.POST['wish-link']
 	list_owner = get_object_or_404(User, pk=request.POST['list_owner'])
-	newWish = Wish(text=text, owner=request.user, wish_for=list_owner)
+	newWish = Wish(text=text, link=link, owner=request.user, wish_for=list_owner)
 	if request.user != list_owner:
 		newWish.reserved_by = request.user
 	newWish.save()
