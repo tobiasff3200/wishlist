@@ -60,7 +60,7 @@
 					</h2>
 					{% if wish.link %}
 						<div>
-							<a href="{{ wish.link }}">Link</a>
+							<a href="{{ wish.link }}" target="_blank" rel="noopener noreferrer">Link</a>
 						</div>
 					{% endif %}
 					<div class="card-actions">
@@ -76,7 +76,8 @@
 						{% endif %}
 					</div>
 				</div>
-			</div>            {% endfor %}
+			</div>
+		{% endfor %}
 		{% if wishes|length == 0 %}
 			Keine Wünsche vorhanden.
 		{% endif %}
