@@ -19,19 +19,18 @@
 {% endblock %}
 
 {% block header_small %}
-	<ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
-		{% for user in all_users %}
-			{% if user == list_owner %}
-				<li class="bordered">
-					{% else %}
-				<li>
-			{% endif %}
-		<a class="" href="{% url 'wishList' user.id %}">
-			{{ user.username }}
-		</a>
-		</li>
-		{% endfor %}
-	</ul>
+	{% for user in all_users %}
+		{% if user == list_owner %}
+			<li class="bordered">
+				{% else %}
+			<li>
+		{% endif %}
+	<a class="" href="{% url 'wishList' user.id %}">
+		{{ user.username }}
+	</a>
+	</li>
+	{% endfor %}
+
 {% endblock %}
 
 {% block content %}
