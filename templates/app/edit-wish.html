@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Wunschliste{% endblock %}
+
+{% block header %}
+	<ul class="menu items-stretch px-3 shadow-lg  horizontal rounded-box ">
+		{% for user in all_users %}
+			{% if user == list_owner %}
+				<li class="bordered">
+					{% else %}
+				<li>
+			{% endif %}
+		<a class="" href="{% url 'wishList' user.id %}">
+			{{ user.username }}
+		</a>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block header_small %}
+	{% for user in all_users %}
+		{% if user == list_owner %}
+			<li class="bordered">
+				{% else %}
+			<li>
+		{% endif %}
+	<a class="" href="{% url 'wishList' user.id %}">
+		{{ user.username }}
+	</a>
+	</li>
+	{% endfor %}
+
+{% endblock %}
+
+{% block content %}
+	<form action="{% url 'editWish' wish.id %}" method="post" class="">
+		{% csrf_token %}
+		<input type="hidden" name="wish_id" value="{{ wish.id }}">
+		<label class="label" for="wish-text"><span class="label-text">Wunsch</span></label>
+		<input type="text" id="wish-text" name="wish-text" class="input input-bordered" value="{{ wish.text }}"
+		       required>
+		<label class="label" for="wish-link"><span class="label-text">Link</span></label>
+		<input type="url" id="wish-link" name="wish-link" class="input input-bordered" value="{{ wish.link }}">
+		<br>
+		<input type="submit" value="Speichern" class="btn">
+	</form>
+{% endblock %}

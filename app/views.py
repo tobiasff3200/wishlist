@@ -61,3 +61,17 @@ def cancelReserveWishView(request, wish_id):
 		wish.reserved_by = None
 		wish.save()
 	return HttpResponseRedirect(reverse('wishList', kwargs={'list_user': request.GET['list_owner']}))
+
+
+@login_required
+def editWishView(request, wish_id):
+	wish = get_object_or_404(Wish, pk=wish_id)
+	if request.method == 'POST':
+		text = request.POST['wish-text']
+		link = request.POST['wish-link']
+		wish.text = text
+		wish.link = link
+		wish.save()
+		return HttpResponseRedirect(reverse('homeView'))
+	else:
+		return HttpResponseRedirect(reverse('wishList', kwargs={'list_user': request.GET['list_owner']}))
