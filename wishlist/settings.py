@@ -12,6 +12,13 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 
+import environ
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+env = environ.Env()
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +29,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-upor%-x+xbyo_^3tmbpwjy0&6+8$%6t-*ke2dfmi7^_tay65c)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['mieves.ddns.net', 'localhost', '127.0.0.1']
 
@@ -127,3 +134,13 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
+
+ERROR_REPORTING = env("ERROR_REPORTING", default=False)
+if ERROR_REPORTING:
+	sentry_sdk.init(
+		dsn="https://glet_ab051ce8157e8c441eeecb44a492aafc@gitlab.fachschaften.org/api/v4/error_tracking/collector/1161",
+		integrations=[DjangoIntegration()],
+		debug=True,
+		traces_sample_rate=1.0,
+		send_default_pii=True
+	)

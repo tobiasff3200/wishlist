@@ -8,6 +8,8 @@ services:
       - "8081:8000"
     volumes:
       - /var/lib/docker/volumes/examgenerator-db/:/app/db/
+    environment:
+      - ERROR_REPORTING=True
     labels:
       - "com.centurylinklabs.watchtower.enable=true"
 
