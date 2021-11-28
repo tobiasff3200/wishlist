@@ -9,4 +9,5 @@ urlpatterns = [
 	path('wish/delete/<int:wish_id>', views.deleteWishView, name="deleteWish"),
 	path('wish/reserve/<int:wish_id>', views.reserveWishView, name="reserveWish"),
 	path('wish/unreserve/<int:wish_id>', views.cancelReserveWishView, name="cancelReserveWish"),
+	path('wish/edit/<int:wish_id>', views.editWishView, name="editWish"),
 ]
