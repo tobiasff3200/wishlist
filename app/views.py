@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from app.models import Wish
+from app.models import Wish, Group
 
 
 @login_required
@@ -14,13 +14,23 @@ def homeView(request):
 
 @login_required
 def wishListView(request, list_owner):
-	wishes = []
+	# Get all user which are in one of the users groups
+	print(Group.objects.count())
+	if Group.objects.count() > 0:
+		groups = request.user.wish_groups.all()
+		userSet = set()  # set only allows unique values
+		for group in groups:
+			userSet.update(list(group.users.all()))
+		users = list(userSet)
+	else:
+		users = User.objects.all()
+	# Get all requests except those that are from others for the user
 	list_owner = get_object_or_404(User, pk=list_owner)
-	users = User.objects.all()
 	if list_owner == request.user:
 		wishes = Wish.objects.filter(wish_for=list_owner).filter(owner=request.user)
 	else:
 		wishes = Wish.objects.filter(wish_for=list_owner)
+
 	return render(request, "app/own-wish-list.html",
 	              context={'wishes': wishes, 'list_owner': list_owner, 'all_users': users})
 
