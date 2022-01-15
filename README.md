@@ -25,9 +25,9 @@ Mit `source venv/bin/activate` und `python /app/manage.py createsuperuser` wird 
 
 Mit `exit` wird der Container wieder verlassen.
 
-### Weitere Benutzer*innen hinzufügen
+### Weitere Benutzer\*innen hinzufügen
 
-Weitere Benutzer*innen können auf der Administrationsseite angelegt werden. Diese ist erreichbar
+Weitere Benutzer\*innen können auf der Administrationsseite angelegt werden. Diese ist erreichbar
 unter `https://<ip oder domain>/admin`. Die Passwörter können später geändert werden.
 
 ## Benutzung
@@ -42,6 +42,13 @@ sehen, ob sie reserviert wurden.
 
 Fügt man einen Wunsch zu der Liste einer anderen Person hinzu, so ist er für alle sichtbar, außer für die Person, die
 das Geschenk bekommen soll. Dadurch kann man selbst den Überblick behalten und vergisst Geschenkideen nicht.
+
+### Gruppen
+
+Auf der Administrationsseite können Benutzer\*innen in Gruppen organisiert werden. Dazu können beliebig viele `Groups`
+unter der Überschrift `app` angelegt werden. **Wichtig:** Wenn eine Gruppe angelegt ist, können alle Benutzer\*innen nur
+noch die Listen von denen sehen, die in mindestens einer Gruppe zusammen sind. Benutzer\*innen, die in keiner Gruppe
+sind, sehen dann nur noch ihre eigene Wunschliste.
 
 ## Fehler oder Anregungen
 
