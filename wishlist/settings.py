@@ -140,7 +140,6 @@ if ERROR_REPORTING:
 	sentry_sdk.init(
 		dsn="https://glet_ab051ce8157e8c441eeecb44a492aafc@gitlab.fachschaften.org/api/v4/error_tracking/collector/1161",
 		integrations=[DjangoIntegration()],
-		debug=True,
-		traces_sample_rate=1.0,
-		send_default_pii=True
+		debug=DEBUG,
+		send_default_pii=False
 	)
