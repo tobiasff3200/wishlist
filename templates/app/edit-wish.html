@@ -36,7 +36,7 @@
 {% block content %}
 	<form action="{% url 'editWish' wish.id %}" method="post" class="">
 		{% csrf_token %}
-		<input type="hidden" name="wish_id" value="{{ wish.id }}">
+		<input type="hidden" name="list_owner" value="{{ list_owner }}">
 		<label class="label" for="wish-text"><span class="label-text">Wunsch</span></label>
 		<input type="text" id="wish-text" name="wish-text" class="input input-bordered" value="{{ wish.text }}"
 		       required>
