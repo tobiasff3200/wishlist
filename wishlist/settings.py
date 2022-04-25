@@ -31,9 +31,8 @@ SECRET_KEY = 'django-insecure-upor%-x+xbyo_^3tmbpwjy0&6+8$%6t-*ke2dfmi7^_tay65c)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['mieves.ddns.net', 'localhost', '127.0.0.1']
-
-# Application definition
+ALLOWED_HOSTS = env("ALLOWED_HOSTS", default=['localhost'])
+CSRF_TRUSTED_ORIGINS = env("CSRF_TRUSTED_ORIGINS", default=['http://localhost'])
 
 INSTALLED_APPS = [
 	'django.contrib.admin',
