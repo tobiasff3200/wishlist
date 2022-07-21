@@ -42,7 +42,7 @@
 		<label class="label" for="wish-link"><span class="label-text">Link</span></label>
 		<input type="url" id="wish-link" name="wish-link" class="input input-bordered">
 		<br>
-		<input type="submit" value="Hinzufügen" class="btn">
+		<input type="submit" value="Hinzufügen" class="btn mt-4">
 	</form>
 	<br>
 	<div>
@@ -59,7 +59,8 @@
 					</h2>
 					{% if wish.link %}
 						<div>
-							<a href="{{ wish.link }}" target="_blank" rel="noopener noreferrer">Link</a>
+							<a class="link" href="{{ wish.link }}" target="_blank"
+							   rel="noopener noreferrer">Link</a>
 						</div>
 					{% endif %}
 					<div class="card-actions">
