@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 import environ
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 
 env = environ.Env()
 environ.Env.read_env()
@@ -114,8 +112,6 @@ TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
-USE_L10N = True
-
 USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
@@ -133,12 +129,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-
-ERROR_REPORTING = env("ERROR_REPORTING", default=False)
-if ERROR_REPORTING:
-	sentry_sdk.init(
-		dsn="https://glet_ab051ce8157e8c441eeecb44a492aafc@gitlab.fachschaften.org/api/v4/error_tracking/collector/1161",
-		integrations=[DjangoIntegration()],
-		debug=DEBUG,
-		send_default_pii=False
-	)
