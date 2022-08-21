@@ -2,7 +2,7 @@ asgiref==3.5.2
 Django==4.0.6
 pip==22.2
 pytz==2022.1
-setuptools==63.2.0
+setuptools==65.1.1
 sqlparse==0.4.2
 wheel==0.37.1
 gunicorn==20.1.0
