@@ -1,5 +1,5 @@
 asgiref==3.5.2
-Django==4.0.6
+Django==4.1
 pip==22.2.2
 pytz==2022.1
 setuptools==65.1.1
