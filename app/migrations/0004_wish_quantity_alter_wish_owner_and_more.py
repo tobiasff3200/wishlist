@@ -6,6 +6,14 @@ from django.db import migrations, models
 import app.models
 
 
+def migrate_reservations(apps, schema_editor):
+    db_alias = schema_editor.connection.alias
+    Wish = apps.get_model('app', 'Wish')
+    for wish in Wish.objects.using(db_alias).all():
+        wish.reserved_by.add(wish.reserved_by_old)
+        wish.save()
+
+
 class Migration(migrations.Migration):
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
@@ -23,13 +31,17 @@ class Migration(migrations.Migration):
             name='owner',
             field=models.ForeignKey(on_delete=models.SET(app.models.get_sentinel_user), to=settings.AUTH_USER_MODEL),
         ),
-        migrations.RemoveField(
-            model_name='wish',
-            name='reserved_by',
+        migrations.RenameField(
+            model_name='wish', old_name='reserved_by', new_name='reserved_by_old'
         ),
         migrations.AddField(
             model_name='wish',
             name='reserved_by',
             field=models.ManyToManyField(related_name='reserved_wishes', to=settings.AUTH_USER_MODEL),
+        ),
+        migrations.RunPython(migrate_reservations),
+        migrations.RemoveField(
+            model_name='wish',
+            name='reserved_by_old',
         ),
     ]
