@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
-from app.models import Wish, Group
+from app.models import Wish, Group, Reservation
 
 
 @login_required
@@ -44,7 +44,8 @@ def newWishView(request):
     newWish = Wish(text=text, link=link, quantity=quantity, owner=request.user, wish_for=list_owner)
     newWish.save()
     if request.user != list_owner:
-        newWish.reserved_by.add(request.user)
+        reservation = Reservation(user=request.user, wish=newWish)
+        reservation.save()
         newWish.save()
     return HttpResponseRedirect(reverse('wishList', kwargs={'list_owner': request.POST['list_owner']}))
 
@@ -59,9 +60,17 @@ def deleteWishView(request, wish_id):
 
 @login_required
 def reserveWishView(request, wish_id):
-    wish = get_object_or_404(Wish, pk=wish_id)
-    if wish.wish_for != request.user and len(wish.reserved_by.all()) < wish.quantity:
-        wish.reserved_by.add(request.user)
+    wish: Wish = get_object_or_404(Wish, pk=wish_id)
+    if wish.wish_for != request.user and wish.is_reservation_possible():
+        reservation = Reservation.objects.all().filter(user=request.user, wish=wish)
+        if reservation:
+            if len(reservation) > 1:
+                raise Exception("More than one reservation")
+            reservation[0].quantity = reservation[0].quantity + 1
+            reservation[0].save()
+        else:
+            reservation = Reservation(user=request.user, wish=wish)
+            reservation.save()
         wish.save()
     return HttpResponseRedirect(reverse('wishList', kwargs={'list_owner': request.GET['list_owner']}))
 
@@ -69,9 +78,14 @@ def reserveWishView(request, wish_id):
 @login_required
 def cancelReserveWishView(request, wish_id):
     wish = get_object_or_404(Wish, pk=wish_id)
-    if wish.reserved_by.contains(request.user):
-        wish.reserved_by.remove(request.user)
-        wish.save()
+    reservation = Reservation.objects.all().filter(user=request.user, wish=wish)
+    if len(reservation) > 1:
+        raise Exception("More than one reservation")
+    if reservation[0].quantity > 1:
+        reservation[0].quantity = reservation[0].quantity - 1
+        reservation[0].save()
+    else:
+        reservation[0].delete()
     return HttpResponseRedirect(reverse('wishList', kwargs={'list_owner': request.GET['list_owner']}))
 
 

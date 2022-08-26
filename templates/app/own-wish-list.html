@@ -55,7 +55,13 @@
 						{{ wish.text }}
 						{% if wish.wish_for != user and wish.reserved_by.all|length > 0 %}
 							<div class="badge">
-								Reserviert von {{ wish.reserved_by.all|join:", " }}
+								Reserviert von
+								{% for reservation in wish.reservation_set.all %}
+									{% if wish.quantity > 1 or reservation.quantity > wish.quantity %}
+										{{ reservation.quantity }}x
+									{% endif %}
+									{{ reservation.user }}{% if not forloop.last %}, {% endif %}
+								{% endfor %}
 							</div>
 						{% endif %}
 					</h2>
@@ -87,7 +93,7 @@
 							<a class="btn btn-sm" href="{% url 'deleteWish' wish.id %}?list_owner={{ list_owner.id }}">Löschen</a>
 							<a class="btn btn-sm" href="{% url 'editWish' wish.id %}?list_owner={{ list_owner.id }}">Bearbeiten</a>
 						{% endif %}
-						{% if wish.wish_for != user and wish.reserved_by.all|length < wish.quantity and not user in wish.reserved_by.all %}
+						{% if wish.wish_for != user and wish.is_reservation_possible %}
 							<a class="btn btn-sm" href="{% url 'reserveWish' wish.id %}?list_owner={{ list_owner.id }}">Reservieren</a>{% endif %}
 						{% if wish.wish_for != user and user in wish.reserved_by.all %}
 							<a class="btn btn-sm"
@@ -98,9 +104,8 @@
 					</div>
 				</div>
 			</div>
-		{% endfor %}
-		{% if wishes|length == 0 %}
+		{% empty %}
 			Keine Wünsche vorhanden.
-		{% endif %}
+		{% endfor %}
 	</div>
 {% endblock %}
