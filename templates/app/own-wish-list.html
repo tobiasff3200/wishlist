@@ -34,19 +34,7 @@
 {% endblock %}
 
 {% block content %}
-	<form action="{% url 'newOwnWish' %}" method="post" class="">
-		{% csrf_token %}
-		<input type="hidden" name="list_owner" value="{{ list_owner.id }}">
-		<label class="label" for="wish-text"><span class="label-text">Neuer Wunsch</span></label>
-		<input type="text" id="wish-text" name="wish-text" class="input input-bordered" required>
-		<label class="label" for="wish-link"><span class="label-text">Link</span></label>
-		<input type="url" id="wish-link" name="wish-link" class="input input-bordered">
-		<label class="label" for="wish-quantity"><span class="label-text">Anzahl</span></label>
-		<input type="number" id="wish-quantity" name="wish-quantity" class="input input-bordered" value="1" min="1">
-		<br>
-		<input type="submit" value="Hinzufügen" class="btn mt-4">
-	</form>
-	<br>
+	<a href="{% url 'createWish' list_owner.id %}" class="btn mb-5">Neuen Wunsch hinzufügen</a>
 	<div>
 		{% for wish in wishes %}
 			<div class="card shadow-lg compact">
