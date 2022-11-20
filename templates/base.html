@@ -37,6 +37,9 @@
 						{% endblock %}
 						<div class="divider"></div>
 						<li>
+							<a href="{% url 'reservationListView' %}">Meine Reservierungen</a>
+						</li>
+						<li>
 							<a href="{% url 'password_change' %}">Passwort ändern</a>
 						</li>
 						<li>
@@ -52,6 +55,9 @@
 				</div>
 				<div>
 					<ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box w-52 text-black">
+						<li>
+							<a href="{% url 'reservationListView' %}">Meine Reservierungen</a>
+						</li>
 						<li>
 							<a href="{% url 'password_change' %}">Passwort ändern</a>
 						</li>

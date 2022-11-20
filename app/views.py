@@ -6,7 +6,7 @@ from django.forms import modelform_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView
 
 from app.models import Wish, Group, Reservation
 
@@ -148,3 +148,12 @@ class EditWishView(LoginRequiredMixin, UpdateView):
 
 	def get_success_url(self):
 		return reverse("wishList", kwargs={"list_owner": self.request.GET.get("list_owner")})
+
+
+class ReservationListView(LoginRequiredMixin, ListView):
+	model = Reservation
+
+	def get_queryset(self, *args, **kwargs):
+		qs = super(ReservationListView, self).get_queryset(*args, **kwargs)
+		qs = qs.filter(user=self.request.user)
+		return qs

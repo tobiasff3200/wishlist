@@ -10,4 +10,5 @@ urlpatterns = [
 	path('wish/reserve/<int:wish_id>', views.reserveWishView, name="reserveWish"),
 	path('wish/unreserve/<int:wish_id>', views.cancelReserveWishView, name="cancelReserveWish"),
 	path('wish/edit/<int:pk>', views.EditWishView.as_view(), name="editWish"),
+	path('reservations', views.ReservationListView.as_view(), name="reservationListView")
 ]
