@@ -1,3 +1,25 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "addLabels": ["dependencies"],
+  "reviewers": ["Tobiasff3200"],
+  "reviewersFromCodeOwners": true,
+  "reviewersSampleSize": 1,
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["patch", "pin", "digest"],
+      "automerge": true
+    }
+  ],
+  "dependencyDashboard": true,
+  "dependencyDashboardAutoclose": true,
+  "extends": [
+    "config:base",
+    "github>whitesource/merge-confidence:beta",
+    "schedule:weekly"
+  ],
+  "prConcurrentLimit": 4,
+  "npm": {
+    "stabilityDays": 3
+  },
+  "lockFileMaintenance": { "enabled": true }
 }
