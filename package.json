@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "daisyui": "^2.22.0"
+  },
+  "scripts": {
+    "tailwind": "npx tailwindcss -i static/wishlist/css/main.css -o ../static/core/css/output.css",
+    "tailwind-watch": "npx tailwindcss -i static/wishlist/css/main.css -o ../static/core/css/output.css --watch"
+  }
+}
