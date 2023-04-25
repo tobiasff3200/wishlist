@@ -21,7 +21,6 @@ def home_view(request):
 @login_required
 def wishListView(request, list_owner):
     # Get all user which are in one of the users groups
-    print(Group.objects.count())
     if Group.objects.count() > 0:
         groups = request.user.wish_groups.all()
         userSet = set()  # set only allows unique values
@@ -183,6 +182,16 @@ class ReservationListView(LoginRequiredMixin, ListView):
         return qs
 
     def get_context_data(self, *args, **kwargs):
+        # Get all user which are in one of the users groups
+        users = None
+        if Group.objects.count() > 0:
+            groups = self.request.user.wish_groups.all()
+            userSet = set()  # set only allows unique values
+            for group in groups:
+                userSet.update(list(group.users.all()))
+            users = list(userSet)
+        else:
+            users = User.objects.all()
         context = super().get_context_data(*args, **kwargs)
-        context["all_users"] = User.objects.all()
+        context["all_users"] = users
         return context
