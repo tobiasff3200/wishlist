@@ -5,4 +5,4 @@
     "@semantic-release/gitlab",
     "@semantic-release/changelog"
 ]
-"branches": ["main"]
+"branches": ["main", {name: 'develop', prerelease: true}]

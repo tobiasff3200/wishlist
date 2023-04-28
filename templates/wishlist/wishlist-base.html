@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load email_hash %}
+
+{% block title %}Wunschliste{% endblock %}
+
+{% block home_logo %}
+	Wunschliste
+{% endblock %}
+
+{% block navbar_extra %}
+{% endblock %}
+
+{% block account_picture %}
+	<label tabindex="0" class="btn btn-ghost btn-circle avatar">
+		<div class="w-10 rounded-full">
+			<img src="https://www.gravatar.com/avatar/{{ person|email_hash }}?d=identicon" alt="Avatar" />
+		</div>
+	</label>
+{% endblock %}
+
+{% block sidebar_list %}
+	<li>
+		<a href="{% url 'reservationListView' %}">Meine Reservierungen</a>
+	</li>
+	{% for user in all_users %}
+		{% if user == list_owner %}
+			<li class="bordered">
+				{% else %}
+			<li>
+		{% endif %}
+	<a class="" href="{% url 'wishList' user.id %}">
+		{{ user.username }}
+	</a>
+	</li>
+	{% endfor %}
+{% endblock %}
