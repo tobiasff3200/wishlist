@@ -17,3 +17,4 @@ RUN npm run tailwind
 
 FROM core
 COPY --from=node /app/static/core/css/output.css /app/static/core/css/output.css
+RUN rm /app/wishlist/static/wishlist/css/main.css
