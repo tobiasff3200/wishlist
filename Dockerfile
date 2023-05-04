@@ -1,4 +1,4 @@
-FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v1.0.0 as core
+FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v1.0.1 as core
 WORKDIR /app
 COPY . /app/wishlist
 RUN pip install -r wishlist/requirements.txt
@@ -17,3 +17,4 @@ RUN npm run tailwind
 
 FROM core
 COPY --from=node /app/static/core/css/output.css /app/static/core/css/output.css
+RUN rm /app/wishlist/static/wishlist/css/main.css

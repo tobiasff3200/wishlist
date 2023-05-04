@@ -18,6 +18,10 @@ class Wish(models.Model):
     reserved_by = models.ManyToManyField(
         User, related_name="reserved_wishes", through="Reservation"
     )
+    favorite = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ("-favorite",)
 
     def is_reservation_possible(self):
         reserved = (Reservation.objects.filter(wish=self).aggregate(Sum("quantity")))[
