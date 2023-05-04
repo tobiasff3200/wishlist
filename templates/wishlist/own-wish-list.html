@@ -12,10 +12,11 @@
         {% for wish in wishes %}
             <div class="card shadow-lg compact">
                 <div class="card-body">
-                    <h2 class="card-title">
+                    <h2 class="card-title w-full flex flex-row justify-between">
+                    <span>
                         {{ wish.text }}
                         {% if wish.wish_for != user and wish.reserved_by.all|length > 0 %}
-                            <div class="badge">
+                            <div class="badge ml-2">
                                 Reserviert von
                                 {% for reservation in wish.reservation_set.all %}
                                     {% if wish.quantity > 1 or reservation.quantity > wish.quantity %}
@@ -25,6 +26,11 @@
                                 {% endfor %}
                             </div>
                         {% endif %}
+                    </span>
+                        <a {% if list_owner == user %}href="{% url 'toggleFavorite' wish.id %}"{% endif %}
+                           class="text-4xl">
+                            {% if wish.favorite %}★{% else %}☆{% endif %}
+                        </a>
                     </h2>
                     {% if wish.quantity > 1 %}
                         <p>
@@ -68,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            {% empty %}
+        {% empty %}
             <div class="alert alert-success shadow-lg">
                 <div>
                     <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
