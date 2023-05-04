@@ -9,6 +9,9 @@ urlpatterns = [
         "wish/add/<int:list_owner>", views.CreateWishView.as_view(), name="createWish"
     ),
     path("wish/delete/<int:wish_id>", views.deleteWishView, name="deleteWish"),
+    path(
+        "wish/favorite/<int:wish_id>", views.toggleFavoriteView, name="toggleFavorite"
+    ),
     path("wish/reserve/<int:wish_id>", views.reserveWishView, name="reserveWish"),
     path(
         "wish/unreserve/<int:wish_id>",

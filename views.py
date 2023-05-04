@@ -105,6 +105,17 @@ def deleteWishView(request, wish_id):
 
 
 @login_required
+def toggleFavoriteView(request, wish_id):
+    wish = get_object_or_404(Wish, pk=wish_id)
+    if wish.wish_for_id == request.user.id:
+        wish.favorite = not wish.favorite
+        wish.save()
+    return HttpResponseRedirect(
+        reverse("wishList", kwargs={"list_owner": request.user.id})
+    )
+
+
+@login_required
 def reserveWishView(request, wish_id):
     wish: Wish = get_object_or_404(Wish, pk=wish_id)
     if wish.wish_for != request.user and wish.is_reservation_possible():
