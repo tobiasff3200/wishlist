@@ -3,28 +3,36 @@
 from django.db import migrations
 
 
+def forwards(apps, schema_editor):
+    try:
+        schema_editor.execute("SELECT * FROM app_wish")
+        schema_editor.execute("DROP TABLE IF EXISTS wishlist_wish;")
+        schema_editor.execute("ALTER TABLE app_wish RENAME TO wishlist_wish;")
+        schema_editor.execute("DROP TABLE IF EXISTS wishlist_group;")
+        schema_editor.execute("ALTER TABLE app_group RENAME TO wishlist_group;")
+        schema_editor.execute("DROP TABLE IF EXISTS wishlist_reservation;")
+        schema_editor.execute(
+            "ALTER TABLE app_reservation RENAME TO wishlist_reservation;"
+        )
+        schema_editor.execute("DROP TABLE IF EXISTS wishlist_group_users;")
+        schema_editor.execute(
+            "ALTER TABLE app_group_users RENAME TO wishlist_group_users;"
+        )
+        schema_editor.execute(
+            "UPDATE django_migrations SET app = 'wishlist' WHERE app = 'app';"
+        )
+        schema_editor.execute(
+            "UPDATE django_content_type SET app_label = 'wishlist' where app_label = 'app';"
+        )
+    except Exception:
+        pass
+
+
 class Migration(migrations.Migration):
     dependencies = [
         ("wishlist", "0006_alter_wish_link_alter_wish_quantity_and_more"),
     ]
 
     operations = [
-        migrations.RunSQL("DROP TABLE IF EXISTS wishlist_wish;"),
-        migrations.RunSQL("ALTER TABLE app_wish RENAME TO wishlist_wish;"),
-        migrations.RunSQL("DROP TABLE IF EXISTS wishlist_group;"),
-        migrations.RunSQL("ALTER TABLE app_group RENAME TO wishlist_group;"),
-        migrations.RunSQL("DROP TABLE IF EXISTS wishlist_reservation;"),
-        migrations.RunSQL(
-            "ALTER TABLE app_reservation RENAME TO wishlist_reservation;"
-        ),
-        migrations.RunSQL("DROP TABLE IF EXISTS wishlist_group_users;"),
-        migrations.RunSQL(
-            "ALTER TABLE app_group_users RENAME TO wishlist_group_users;"
-        ),
-        migrations.RunSQL(
-            "UPDATE django_migrations SET app = 'wishlist' WHERE app = 'app';"
-        ),
-        migrations.RunSQL(
-            "UPDATE django_content_type SET app_label = 'wishlist' where app_label = 'app';"
-        ),
+        migrations.RunPython(forwards, atomic=True),
     ]
