@@ -2,6 +2,7 @@ import django.forms
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.forms import modelform_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -29,8 +30,11 @@ def wishListView(request, list_owner):
         users = list(userSet)
     else:
         users = User.objects.all()
-    # Get all requests except those that are from others for the user
     list_owner = get_object_or_404(User, pk=list_owner)
+    # Check if the user is allowed to see the list
+    if not list_owner in users:
+        raise PermissionDenied()
+    # Get all requests except those that are from others for the user
     if list_owner == request.user:
         wishes = Wish.objects.filter(wish_for=list_owner).filter(owner=request.user)
     else:
