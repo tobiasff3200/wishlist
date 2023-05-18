@@ -8,7 +8,7 @@ RUN sed -i 's/{{app_to_install}}/wishlist/g' core/settings.py
 RUN sed -i 's/{{app_to_install}}/wishlist/g' core/urls.py
 
 
-FROM node:18 AS node
+FROM node:20 AS node
 WORKDIR /app/wishlist
 COPY --from=core /app /app
 RUN npm ci
