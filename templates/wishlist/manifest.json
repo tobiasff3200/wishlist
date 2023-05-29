@@ -1,0 +1,18 @@
+{
+  % load static %}
+{
+"name": "Wunschliste",
+"short_name": "Wunschliste",
+"theme_color": "#fff",
+"background_color": "#fff",
+"scope": "/",
+"start_url": "/",
+"lang": "de-DE",
+"display": "standalone",
+"icons": [
+{
+"src": "{% static 'wishlist/logo.png' %}",
+"type": "image/png"
+}
+]
+}

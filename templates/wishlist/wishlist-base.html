@@ -1,36 +1,48 @@
 {% extends 'base.html' %}
 {% load email_hash %}
+{% load static %}
 
 {% block title %}Wunschliste{% endblock %}
+{% block head %}
+    <link rel="icon" type="image/x-icon" href="{% static 'wishlist/images/logo.png' %}">
+    <link rel="manifest" href="{% url 'manifest' %}">
+{% endblock %}
 
 {% block home_logo %}
-	Wunschliste
+    <div class="flex">
+        <div class="avatar">
+            <div class="w-10 rounded">
+                <img src="{% static 'wishlist/images/logo.png' %}"/>
+            </div>
+        </div>
+        <p class="m-auto">Wunschliste</p>
+    </div>
 {% endblock %}
 
 {% block navbar_extra %}
 {% endblock %}
 
 {% block account_picture %}
-	<label tabindex="0" class="btn btn-ghost btn-circle avatar">
-		<div class="w-10 rounded-full">
-			<img src="https://www.gravatar.com/avatar/{{ person|email_hash }}?d=identicon" alt="Avatar" />
-		</div>
-	</label>
+    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+            <img src="https://www.gravatar.com/avatar/{{ person|email_hash }}?d=identicon" alt="Avatar"/>
+        </div>
+    </label>
 {% endblock %}
 
 {% block sidebar_list %}
-	<li>
-		<a href="{% url 'reservationListView' %}">Meine Reservierungen</a>
-	</li>
-	{% for user in all_users %}
-		{% if user == list_owner %}
-			<li class="bordered">
-				{% else %}
-			<li>
-		{% endif %}
-	<a class="" href="{% url 'wishList' user.id %}">
-		{{ user.username }}
-	</a>
-	</li>
-	{% endfor %}
+    <li>
+        <a href="{% url 'reservationListView' %}">Meine Reservierungen</a>
+    </li>
+    {% for user in all_users %}
+        {% if user == list_owner %}
+            <li class="bordered">
+                {% else %}
+            <li>
+        {% endif %}
+    <a class="" href="{% url 'wishList' user.id %}">
+        {{ user.username }}
+    </a>
+    </li>
+    {% endfor %}
 {% endblock %}

@@ -22,4 +22,5 @@ urlpatterns = [
     path(
         "reservations", views.ReservationListView.as_view(), name="reservationListView"
     ),
+    path("manifest.json", views.getManifest, name="manifest"),
 ]
