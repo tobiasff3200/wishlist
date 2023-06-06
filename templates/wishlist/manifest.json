@@ -1,18 +1,53 @@
+{% load static %}
 {
-  % load static %}
-{
-"name": "Wunschliste",
-"short_name": "Wunschliste",
-"theme_color": "#fff",
-"background_color": "#fff",
-"scope": "/",
-"start_url": "/",
-"lang": "de-DE",
-"display": "standalone",
-"icons": [
-{
-"src": "{% static 'wishlist/logo.png' %}",
-"type": "image/png"
-}
-]
+  "name": "Wunschliste",
+  "short_name": "Wunschliste",
+  "theme_color": "#fff",
+  "background_color": "#fff",
+  "scope": "/",
+  "start_url": "/",
+  "lang": "de-DE",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "{% static 'wishlist/logo-24.png' %}",
+      "sizes": "24x24",
+      "type": "image/png"
+    },
+    {
+      "src": "{% static 'wishlist/logo-16.png' %}",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "{% static 'wishlist/logo-32.png' %}",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "{% static 'wishlist/logo-64.png' %}",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "{% static 'wishlist/logo-128.png' %}",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "{% static 'wishlist/logo-192.png' %}",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "{% static 'wishlist/logo-256.png' %}",
+      "sizes": "256x256",
+      "type": "image/png"
+    },
+    {
+      "src": "{% static 'wishlist/logo-512.png' %}",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
