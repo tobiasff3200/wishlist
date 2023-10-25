@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "daisyui": "^2.22.0"
+    "daisyui": "^3.9.3"
   },
   "scripts": {
     "tailwind": "npx tailwindcss -i static/wishlist/css/main.css -o ../static/core/css/output.css",

@@ -1,4 +1,4 @@
-FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v1.0.1 as core
+FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v2.0.2 as core
 WORKDIR /app
 COPY . /app/wishlist
 RUN pip install -r wishlist/requirements.txt
