@@ -154,6 +154,10 @@ def cancelReserveWishView(request, wish_id):
     )
 
 
+def getManifest(request):
+    return render(request, "wishlist/manifest.json", content_type="application/json")
+
+
 class EditWishView(LoginRequiredMixin, UpdateView):
     model = Wish
     template_name = "wishlist/edit-wish.html"

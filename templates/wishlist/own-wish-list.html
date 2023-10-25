@@ -39,7 +39,7 @@
                     </span>
 						<a {% if list_owner == user %}href="{% url 'toggleFavorite' wish.id %}"{% endif %}
 						   class="text-4xl">
-							{% if wish.favorite %}★{% else %}☆{% endif %}
+							{% if wish.favorite %}★{% elif list_owner == user %}☆{% endif %}
 						</a>
 					</h2>
 					{% if wish.quantity > 1 %}

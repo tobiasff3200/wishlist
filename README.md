@@ -56,3 +56,7 @@ Bitte meldet gefundene Fehler per [Email](mailto:tobiasff3200-wishlist-1161-issu
 als [Issue](https://gitlab.fachschaften.org/tobiasff3200/wishlist/-/issues).
 
 Gerne können auch Änderungswünsche oder neue Funktionen vorgeschlagen werden.
+
+## Credits
+
+[Wishlist icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/wishlist)
