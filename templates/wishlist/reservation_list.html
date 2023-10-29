@@ -1,32 +1,30 @@
 {% extends 'wishlist/wishlist-base.html' %}
 
 {% block content %}
-    <h1 class="font-bold text-3xl">Meine Reservierungen</h1>
-    {% for reservation in object_list %}
-        <div class="card shadow-lg compact">
-            <div class="card-body">
-                <h2 class="card-title">
-                    {{ reservation.wish.wish_for }}
-                </h2>
-                {{ reservation.wish.text }}
-                <div class="card-actions">
-                    <a class="btn btn-sm"
-                       href="{% url 'cancelReserveWish' reservation.wish.id %}?list_owner={{ list_owner.id }}">
-                        Nicht mehr reservieren
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% empty %}
-        <div class="alert alert-success shadow-lg mt-4">
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
-                     viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <span>Keine Reservierungen.</span>
-            </div>
-        </div>
-    {% endfor %}
+	<h1 class="font-bold text-3xl">Meine Reservierungen</h1>
+	{% for reservation in object_list %}
+		<div class="card shadow-lg compact">
+			<div class="card-body">
+				<h2 class="card-title">
+					{{ reservation.wish.wish_for }}
+				</h2>
+				{{ reservation.wish.text }}
+				<div class="card-actions">
+					<a class="btn btn-sm"
+					   href="{% url 'cancelReserveWish' reservation.wish.id %}?list_owner={{ reservation.wish.wish_for.id }}">
+						Nicht mehr reservieren
+					</a>
+				</div>
+			</div>
+		</div>
+		{% empty %}
+		<div class="alert alert-success shadow-lg mt-4">
+			<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none"
+			     viewBox="0 0 24 24">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+				      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+			</svg>
+			<span>Keine Reservierungen.</span>
+		</div>
+	{% endfor %}
 {% endblock %}
