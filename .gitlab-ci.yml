@@ -2,3 +2,6 @@ include:
     - project: tobiasff3200/ci-cd
       file: .gitlab-ci.yml
       
+npm:build:
+  rules:
+    - when: never
