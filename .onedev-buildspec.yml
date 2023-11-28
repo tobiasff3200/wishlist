@@ -1,0 +1,37 @@
+version: 25
+jobs:
+- name: Git Sync Push
+  steps:
+  - !PushRepository
+    name: Push to gitlab.fachschaften.org
+    remoteUrl: https://gitlab.fachschaften.org/tobiasff3200/wishlist.git
+    userName: Tobias
+    passwordSecret: GitLab.Fachschaften.org_Sync_Token
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !BranchUpdateTrigger {}
+  - !TagCreateTrigger {}
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
+- name: Git Sync Pull
+  steps:
+  - !PullRepository
+    name: Pull from gitlab.fachschaften.org
+    remoteUrl: https://gitlab.fachschaften.org/tobiasff3200/wishlist.git
+    syncToChildProject: false
+    userName: Tobias
+    passwordSecret: GitLab.Fachschaften.org_Sync_Token
+    refs: refs/heads/* refs/tags/*
+    withLfs: true
+    force: false
+    condition: ALL_PREVIOUS_STEPS_WERE_SUCCESSFUL
+  triggers:
+  - !ScheduleTrigger
+    cronExpression: 5 4 * * * ?
+  retryCondition: never
+  maxRetries: 3
+  retryDelay: 30
+  timeout: 3600
