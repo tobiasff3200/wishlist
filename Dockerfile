@@ -1,7 +1,7 @@
 FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v2.0.2 as core
 WORKDIR /app
 COPY . /app/wishlist
-RUN pip install -r wishlist/requirements.txt
+RUN pip install --no-cache-dir -r wishlist/requirements.txt
 RUN rm wishlist/requirements.txt
 
 RUN sed -i 's/{{app_to_install}}/wishlist/g' core/settings.py
