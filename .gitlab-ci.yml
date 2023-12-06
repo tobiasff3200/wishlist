@@ -1,42 +1,13 @@
-stages:
-  - install
-  - test
-  - docker
-  - release
-
-docker:build:
-  stage: docker
-  image: docker:24
-  services:
-    - docker:dind
-  before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  script:
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG -t $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:develop .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_TAG
-    - if [[ $CI_COMMIT_TAG == *"develop"* ]]; then
-      docker push $CI_REGISTRY_IMAGE:develop;
-      else
-      docker push $CI_REGISTRY_IMAGE:latest;
-      fi
-  only:
-    - tags
-
-release:
-  image: node:20-buster-slim
-  stage: release
-  before_script:
-    - apt-get update && apt-get install -y --no-install-recommends git-core ca-certificates
-    - npm install -g semantic-release @semantic-release/gitlab @semantic-release/git @semantic-release/changelog @semantic-release/release-notes-generator
-  script:
-    - semantic-release
-  only:
-    - main
-    - develop
-
 include:
-  - template: Dependency-Scanning.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml
-  - template: Security/SAST.gitlab-ci.yml
-  - template: Secret-Detection.gitlab-ci.yml
-  - template: Code-Quality.gitlab-ci.yml
+  - project: tobiasff3200/ci-cd
+    file: .gitlab-ci.yml
+    inputs:
+      npm-root: "./"
+
+npm:build:
+  rules:
+    - when: never
+
+npm:test:
+  rules:
+    - when: never
