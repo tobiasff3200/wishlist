@@ -17,7 +17,7 @@
 {% endblock %}
 
 {% block content %}
-	<a href="{% url 'createWish' list_owner.id %}" class="btn w-full mb-4 sm:hidden">Neuen Wunsch hinzufügen</a>
+	<a href="{% url 'createWish' list_owner.id %}" class="btn w-full mb-4 lg:hidden">Neuen Wunsch hinzufügen</a>
 	<div>
 		{% for wish in wishes %}
 			<div class="card shadow-lg compact">
