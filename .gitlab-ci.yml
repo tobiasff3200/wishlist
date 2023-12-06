@@ -1,9 +1,9 @@
 include:
-    - project: tobiasff3200/ci-cd
-      file: .gitlab-ci.yml
-      inputs:
-        npm-root: "./"
-      
+  - project: tobiasff3200/ci-cd
+    file: .gitlab-ci.yml
+    inputs:
+      npm-root: "./"
+
 npm:build:
   rules:
     - when: never
