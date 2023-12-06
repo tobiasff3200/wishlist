@@ -4,12 +4,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.forms import modelform_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpRequest
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView, ListView
 
-from wishlist.models import Wish, Group, Reservation
+from wishlist.models import Wish, Reservation, Group
 
 
 @login_required
@@ -19,20 +19,29 @@ def home_view(request):
     )
 
 
-@login_required
-def wishListView(request, list_owner):
-    # Get all user which are in one of the users groups
+def get_all_users_filtered(request: HttpRequest) -> list[User]:
+    """
+    Returns a list of users within the same groups as the current user. If there are no groups, all users in the User table are returned.
+    @param request: The current incoming http request
+    @return: list[User]: A list of User objects that match the specified filter criteria.
+    """
     if Group.objects.count() > 0:
         groups = request.user.wish_groups.all()
-        userSet = set()  # set only allows unique values
+        user_set = set()  # set only allows unique values
         for group in groups:
-            userSet.update(list(group.users.all()))
-        users = list(userSet)
+            user_set.update(list(group.users.all()))
+        users = list(user_set)
     else:
         users = User.objects.all()
+    return users
+
+
+@login_required
+def wishListView(request: HttpRequest, list_owner):
+    users = get_all_users_filtered(request)
     list_owner = get_object_or_404(User, pk=list_owner)
     # Check if the user is allowed to see the list
-    if not list_owner in users:
+    if not (list_owner in users or list_owner == request.user):
         raise PermissionDenied()
     # Get all requests except those that are from others for the user
     if list_owner == request.user:
@@ -93,7 +102,7 @@ class CreateWishView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["all_users"] = User.objects.all()
+        context["all_users"] = get_all_users_filtered(self.request)
         context["list_owner"] = get_object_or_404(User, pk=self.kwargs["list_owner"])
         return context
 
@@ -180,7 +189,7 @@ class EditWishView(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["all_users"] = User.objects.all()
+        context["all_users"] = get_all_users_filtered(self.request)
         context["list_owner"] = get_object_or_404(
             User, pk=self.request.GET.get("list_owner")
         )
@@ -201,16 +210,6 @@ class ReservationListView(LoginRequiredMixin, ListView):
         return qs
 
     def get_context_data(self, *args, **kwargs):
-        # Get all user which are in one of the users groups
-        users = None
-        if Group.objects.count() > 0:
-            groups = self.request.user.wish_groups.all()
-            userSet = set()  # set only allows unique values
-            for group in groups:
-                userSet.update(list(group.users.all()))
-            users = list(userSet)
-        else:
-            users = User.objects.all()
         context = super().get_context_data(*args, **kwargs)
-        context["all_users"] = users
+        context["all_users"] = get_all_users_filtered(self.request)
         return context
