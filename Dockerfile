@@ -1,11 +1,9 @@
-FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v2.0.3 as core
+FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v3.0.0 as core
 WORKDIR /app
 COPY . /app/wishlist
-RUN pip install --no-cache-dir -r wishlist/requirements.txt
-RUN rm wishlist/requirements.txt
+RUN pip install --no-cache-dir -r wishlist/requirements.txt && rm wishlist/requirements.txt
 
-RUN sed -i 's/{{app_to_install}}/wishlist/g' core/settings.py
-RUN sed -i 's/{{app_to_install}}/wishlist/g' core/urls.py
+RUN sed -i 's/{{app_to_install}}/wishlist/g' core/settings.py && sed -i 's/{{app_to_install}}/wishlist/g' core/urls.py
 
 
 FROM node:21 AS node
