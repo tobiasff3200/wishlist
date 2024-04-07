@@ -1,6 +1,6 @@
 # Wunschliste
 
-## Features:
+## Features
 
 - Eine Wunschliste für Jeden
 - Es können versteckte Wünsche zu den Listen der anderen hinzufügen werden.
