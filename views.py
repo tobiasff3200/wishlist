@@ -45,9 +45,9 @@ def wishListView(request: HttpRequest, list_owner):
         raise PermissionDenied()
     # Get all requests except those that are from others for the user
     if list_owner == request.user:
-        wishes = Wish.objects.filter(wish_for=list_owner).filter(owner=request.user)
+        wishes = Wish.objects.filter(wish_for=list_owner).filter(owner=request.user).filter(depends_on__isnull=True)
     else:
-        wishes = Wish.objects.filter(wish_for=list_owner)
+        wishes = Wish.objects.filter(wish_for=list_owner).filter(depends_on__isnull=True)
 
     return render(
         request,
@@ -61,7 +61,7 @@ class CreateWishView(LoginRequiredMixin, CreateView):
     template_name = "wishlist/create-wish.html"
     form_class = modelform_factory(
         Wish,
-        fields=("text", "link", "quantity"),
+        fields=("text", "link", "quantity", "depends_on"),
         labels={"text": "Wunsch", "link": "Link", "quantity": "Anzahl"},
         widgets={
             "text": django.forms.TextInput(
@@ -73,8 +73,14 @@ class CreateWishView(LoginRequiredMixin, CreateView):
             "quantity": django.forms.NumberInput(
                 attrs={"class": "input input-bordered w-full max-w-xs", "min": 1}
             ),
+            "depends_on": django.forms.Select(attrs={"class": "select select-bordered w-full max-w-xs"})
         },
     )
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['depends_on'].queryset = Wish.objects.filter(wish_for_id=self.kwargs.get("list_owner"))
+        return form
 
     def form_valid(self, form):
         list_owner = self.kwargs["list_owner"]
@@ -88,6 +94,7 @@ class CreateWishView(LoginRequiredMixin, CreateView):
                 quantity=data.get("quantity"),
                 owner=self.request.user,
                 wish_for=list_owner,
+                depends_on=data.get("depends_on")
             )
             wish.save()
             if self.request.user != list_owner:
@@ -172,7 +179,7 @@ class EditWishView(LoginRequiredMixin, UpdateView):
     template_name = "wishlist/edit-wish.html"
     form_class = modelform_factory(
         Wish,
-        fields=("text", "link", "quantity"),
+        fields=("text", "link", "quantity", "depends_on"),
         labels={"text": "Wunsch", "link": "Link", "quantity": "Anzahl"},
         widgets={
             "text": django.forms.TextInput(
@@ -184,8 +191,14 @@ class EditWishView(LoginRequiredMixin, UpdateView):
             "quantity": django.forms.NumberInput(
                 attrs={"class": "input input-bordered w-full max-w-xs", "min": 1}
             ),
+            "depends_on": django.forms.Select(attrs={"class": "select select-bordered w-full max-w-xs"})
         },
     )
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['depends_on'].queryset = Wish.objects.filter(wish_for_id=self.request.GET.get("list_owner"))
+        return form
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
