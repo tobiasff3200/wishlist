@@ -20,74 +20,7 @@
 	<a href="{% url 'createWish' list_owner.id %}" class="btn w-full mb-4 lg:hidden">Neuen Wunsch hinzufügen</a>
 	<div>
 		{% for wish in wishes %}
-			<div class="card shadow-lg compact">
-				<div class="card-body">
-					<h2 class="card-title w-full flex flex-row justify-between">
-                    <span>
-                        {{ wish.text }}
-	                    {% if wish.wish_for != user and wish.reserved_by.all|length > 0 %}
-		                    <div class="badge ml-2">
-                                Reserviert von
-			                    {% for reservation in wish.reservation_set.all %}
-				                    {% if wish.quantity > 1 or reservation.quantity > wish.quantity %}
-					                    {{ reservation.quantity }}x
-				                    {% endif %}
-				                    {{ reservation.user }}{% if not forloop.last %}, {% endif %}
-			                    {% endfor %}
-                            </div>
-	                    {% endif %}
-                    </span>
-						<a {% if list_owner == user %}href="{% url 'toggleFavorite' wish.id %}"{% endif %}
-						   class="text-4xl">
-							{% if wish.favorite %}★{% elif list_owner == user %}☆{% endif %}
-						</a>
-					</h2>
-					{% if wish.quantity > 1 %}
-						<p>
-							<span class="italic font-bold">Anzahl: {{ wish.quantity }}</span>
-						</p>
-					{% endif %}
-					{% if wish.owner != list_owner %}
-						<p>
-							<span class="italic">Vorschlag von {{ wish.owner }}</span>
-							<span class="tooltip tooltip-bottom inline-flex"
-							      data-tip="{{ list_owner }} kann diesen Vorschlag nicht sehen. Für weitere Fragen bitte an {{ wish.owner }} wenden.">
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-							     class="w-4 h-4 stroke-current">
-								<path stroke-linecap="round"
-								      stroke-linejoin="round"
-								      stroke-width="2"
-								      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-							</svg>
-							️
-						</span>
-						</p>
-					{% endif %}
-					{% if wish.link %}
-						<div>
-							<a class="link" href="{{ wish.link }}" target="_blank"
-							   rel="noopener noreferrer">Link</a>
-						</div>
-					{% endif %}
-					<div class="card-actions">
-						{% if wish.owner == user %}
-							<a class="btn btn-sm"
-							   href="{% url 'deleteWish' wish.id %}?list_owner={{ list_owner.id }}">Löschen</a>
-							<a class="btn btn-sm"
-							   href="{% url 'editWish' wish.id %}?list_owner={{ list_owner.id }}">Bearbeiten</a>
-						{% endif %}
-						{% if wish.wish_for != user and wish.is_reservation_possible %}
-							<a class="btn btn-sm"
-							   href="{% url 'reserveWish' wish.id %}?list_owner={{ list_owner.id }}">Reservieren</a>{% endif %}
-						{% if wish.wish_for != user and user in wish.reserved_by.all %}
-							<a class="btn btn-sm"
-							   href="{% url 'cancelReserveWish' wish.id %}?list_owner={{ list_owner.id }}">
-								Nicht mehr reservieren
-							</a>
-						{% endif %}
-					</div>
-				</div>
-			</div>
+            {% include "wishlist/wish_template.html" with wish=wish %}
 			{% empty %}
 			<div class="alert alert-success shadow-lg">
 				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"

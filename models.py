@@ -19,17 +19,25 @@ class Wish(models.Model):
         User, related_name="reserved_wishes", through="Reservation"
     )
     favorite = models.BooleanField(default=False)
+    depends_on = models.ForeignKey('Wish', on_delete=models.SET_NULL, related_name="dependent_wishes", null=True,
+                                   blank=True)
 
     class Meta:
         ordering = ("-favorite",)
 
     def is_reservation_possible(self):
+        if self.depends_on is not None and len(self.depends_on.reserved_by.all()) == 0:
+            return False
+
         reserved = (Reservation.objects.filter(wish=self).aggregate(Sum("quantity")))[
             "quantity__sum"
         ]
         if reserved:
             return reserved < self.quantity
         return True
+
+    def __str__(self):
+        return self.text
 
 
 class Group(models.Model):

@@ -29,11 +29,19 @@
 							</label>
 							{{ form.quantity }}
 						</div>
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label" for="{{ form.depends_on.id_for_label }}">
+                                <span class="label-text">{{ form.depends_on.label_tag }}</span>
+                                <span class="label-text-alt">{{ form.depends_on.errors }}</span>
+                            </label>
+                            {{ form.depends_on }}
+                        </div>
 						<div class="card-actions justify-end mt-4">
 							<button class="btn btn-primary" type="submit">Hinzufügen</button>
 						</div>
 					</div>
 				</form>
+                <div class="hidden select select-bordered w-full max-w-xs"></div>
 			</div>
 		</div>
 	</div>
