@@ -4,7 +4,7 @@ COPY . /app/wishlist
 RUN sed -i 's/{{app_to_install}}/wishlist/g' core/settings.py && sed -i 's/{{app_to_install}}/wishlist/g' core/urls.py
 
 
-FROM node:21 AS node
+FROM node:22 AS node
 WORKDIR /app/wishlist
 COPY --from=core /app /app
 RUN npm ci && npm run tailwind
