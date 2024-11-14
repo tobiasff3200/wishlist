@@ -1,4 +1,4 @@
-FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v3.0.2 AS core
+FROM registry.gitlab.fachschaften.org/tobiasff3200/django-core:v3.0.3 AS core
 WORKDIR /app
 COPY . /app/wishlist
 RUN sed -i 's/{{app_to_install}}/wishlist/g' core/settings.py && sed -i 's/{{app_to_install}}/wishlist/g' core/urls.py
