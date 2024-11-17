@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView, ListView
 
-from mixins import IsWishOwnerMixin
+from wishlist.mixins import IsWishOwnerMixin
 from wishlist.models import Wish, Reservation, Group
 
 
