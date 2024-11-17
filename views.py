@@ -9,6 +9,7 @@ from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView, ListView
 
+from mixins import IsWishOwnerMixin
 from wishlist.models import Wish, Reservation, Group
 
 
@@ -83,7 +84,6 @@ class CreateWishView(LoginRequiredMixin, CreateView):
         return form
 
     def form_valid(self, form):
-        list_owner = self.kwargs["list_owner"]
         if form.is_valid():
             list_owner = get_object_or_404(User, pk=self.kwargs["list_owner"])
             print(form.cleaned_data)
@@ -174,7 +174,7 @@ def getManifest(request):
     return render(request, "wishlist/manifest.json", content_type="application/json")
 
 
-class EditWishView(LoginRequiredMixin, UpdateView):
+class EditWishView(LoginRequiredMixin, IsWishOwnerMixin, UpdateView):
     model = Wish
     template_name = "wishlist/edit-wish.html"
     form_class = modelform_factory(
@@ -197,15 +197,12 @@ class EditWishView(LoginRequiredMixin, UpdateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        form.fields['depends_on'].queryset = Wish.objects.filter(wish_for_id=self.request.GET.get("list_owner"))
+        form.fields['depends_on'].queryset = Wish.objects.filter(wish_for_id=self.get_object().wish_for)
         return form
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(**kwargs)
         context["all_users"] = get_all_users_filtered(self.request)
-        context["list_owner"] = get_object_or_404(
-            User, pk=self.request.GET.get("list_owner")
-        )
         return context
 
     def get_success_url(self):
