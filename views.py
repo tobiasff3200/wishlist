@@ -7,7 +7,7 @@ from django.forms import modelform_factory
 from django.http import HttpResponseRedirect, HttpRequest
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
 from wishlist.mixins import IsWishOwnerMixin
 from wishlist.models import Wish, Reservation, Group
@@ -112,6 +112,13 @@ class CreateWishView(LoginRequiredMixin, CreateView):
         context["all_users"] = get_all_users_filtered(self.request)
         context["list_owner"] = get_object_or_404(User, pk=self.kwargs["list_owner"])
         return context
+
+
+class DeleteWishView(LoginRequiredMixin, IsWishOwnerMixin, DeleteView):
+    model = Wish
+
+    def get_success_url(self):
+        return reverse("wishList", kwargs={"list_owner": self.request.GET["list_owner"]})
 
 
 @login_required

@@ -14,3 +14,4 @@ services:
       - ./wishlist-db/:/app/db/
     environment:
       - DEBUG=True
+      - SECRET_KEY=Test
