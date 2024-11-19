@@ -1,0 +1,17 @@
+{% extends 'wishlist/wishlist-base.html' %}
+
+{% block content %}
+    <form action="" method="post" class="m-auto w-3/4">
+        {% csrf_token %}
+        <div class="card bg-base-100  shadow-xl">
+            <div class="card-body">
+                <h2 class="card-title text-2xl">Wunsch wirklich löschen?</h2>
+                {% include "wishlist/wish_template.html" with wish=wish readonly=True %}
+                <div class="card-actions justify-end mt-4">
+                    <input type="submit" class="btn btn-secondary" value="Cancel" name="cancel" />
+                    <input type="submit" class="btn btn-error" value="Confirm deletion" name="confirm_delete" />
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}

@@ -8,7 +8,7 @@ urlpatterns = [
     path(
         "wish/add/<int:list_owner>", views.CreateWishView.as_view(), name="createWish"
     ),
-    path("wish/delete/<int:wish_id>", views.deleteWishView, name="deleteWish"),
+    path("wish/delete/<int:pk>", views.DeleteWishView.as_view(), name="deleteWish"),
     path(
         "wish/favorite/<int:wish_id>", views.toggleFavoriteView, name="toggleFavorite"
     ),
