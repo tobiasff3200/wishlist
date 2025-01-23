@@ -3,32 +3,26 @@
   "addLabels": [
     "dependencies"
   ],
-  "dependencyDashboard": true,
-  "extends": [
-    "config:base",
-    "github>whitesource/merge-confidence:beta",
-    "schedule:weekly"
-  ],
-  "lockFileMaintenance": {
-    "enabled": true
-  },
-  "npm": {
-    "stabilityDays": 3
-  },
+  "reviewersFromCodeOwners": true,
   "packageRules": [
     {
-      "automerge": true,
       "matchUpdateTypes": [
         "patch",
         "pin",
         "digest"
-      ]
+      ],
+      "automerge": true
     }
   ],
-  "prConcurrentLimit": 4,
-  "reviewers": [
-    "Tobiasff3200"
+  "dependencyDashboard": true,
+  "extends": [
+    "config:base",
+    "github>whitesource/merge-confidence:beta"
   ],
-  "reviewersFromCodeOwners": true,
-  "reviewersSampleSize": 1
+  "npm": {
+    "stabilityDays": 3
+  },
+  "lockFileMaintenance": {
+    "enabled": true
+  }
 }

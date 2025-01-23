@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Core{% endblock %}</title>
+    <link href="{% static 'core/css/output.css' %}" rel="stylesheet" type="text/css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+<div class="drawer break-words hyphens-auto">
+    <input id="drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content flex flex-col">
+        <!-- Navbar -->
+        <div class="navbar w-full bg-neutral rounded-box" data-theme="dark">
+            <div class="flex-none lg:hidden">
+                <label for="drawer" class="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                         class="inline-block w-6 h-6 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </label>
+            </div>
+            <div class="flex-1 px-2 mx-2">
+                {% block home_logo %}
+                    <a href="{% url 'home_view' %}" class="text-lg font-bold align-middle">
+                        DaisyUI
+                    </a>
+                {% endblock %}
+            </div>
+            <div class="flex-none hidden lg:block z-10">
+                <ul class="menu menu-horizontal">
+                    {% block navbar_links %}
+                        <li><a>Item 1</a></li>
+                        <li tabindex="0">
+                            <details>
+                                <summary>Parent</summary>
+                                <ul class="p-2">
+                                    <li><a>Submenu 1</a></li>
+                                    <li><a>Submenu 2</a></li>
+                                </ul>
+                            </details>
+                        </li>
+                        <li><a>Item 3</a></li>
+                    {% endblock %}
+                </ul>
+            </div>
+
+            <div class="dropdown dropdown-end">
+                {% block account_picture %}
+                    <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-10 rounded-full">
+                            <img src="https://placeimg.com/80/80/people" />
+                        </div>
+                    </label>
+                {% endblock %}
+                <ul tabindex="0"
+                    class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 text-base-content rounded-box w-52">
+                    {% block account_dropdown_list %}
+                        <li>
+                            <a href="{% url 'password_change' %}">Passwort ändern</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'logout' %}">{{ user.username }} abmelden</a>
+                        </li>
+                    {% endblock %}
+                </ul>
+            </div>
+        </div>
+        <!-- Page content here -->
+        <main class="p-4 w-full break-words hyphens-auto">
+            {% block content %}
+                Content
+            {% endblock %}
+        </main>
+    </div>
+    <div class="drawer-side">
+        <label for="drawer" class="drawer-overlay"></label>
+        <ul class="menu p-4 w-80 min-h-full bg-base-200">
+            {% block sidebar_links %}
+                <li><a>Sidebar Item 1</a></li>
+                <li><a>Sidebar Item 2</a></li>
+            {% endblock %}
+
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>

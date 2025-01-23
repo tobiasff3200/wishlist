@@ -1,8 +1,7 @@
 ---
-version: "3"
 services:
   wishlist:
-    image: registry.gitlab.fachschaften.org/tobiasff3200/wishlist
+    image: registry.gitlab.fachschaften.org/mieves.dev/wishlist
     container_name: wishlist
     build:
       context: .
@@ -11,7 +10,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./wishlist-db/:/app/db/
+      - ./db/:/app/db/
     environment:
       - DEBUG=True
       - SECRET_KEY=Test

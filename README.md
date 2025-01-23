@@ -11,8 +11,7 @@
 
 ### Docker Compose
 
-Die Datei [docker-compose.yml](https://gitlab.fachschaften.org/tobiasff3200/wishlist/-/blob/main/docker-compose.yml)
-herunterladen und mit `docker compose up -d` starten.
+Die Datei `docker-compose.yml` herunterladen und mit `docker compose up -d` starten.
 
 ## Konfiguration
 
@@ -52,8 +51,8 @@ sind, sehen dann nur noch ihre eigene Wunschliste.
 
 ## Fehler oder Anregungen
 
-Bitte meldet gefundene Fehler per [Email](mailto:tobiasff3200-wishlist-1161-issue-@gitlab.fachschaften.org) oder
-als [Issue](https://gitlab.fachschaften.org/tobiasff3200/wishlist/-/issues).
+Bitte meldet gefundene Fehler per [Email](mailto:mieves-dev-wishlist-4029-issue-@gitlab.fachschaften.org) oder
+als [Issue](https://github.com/tobiasff3200/wishlist/issues).
 
 Gerne können auch Änderungswünsche oder neue Funktionen vorgeschlagen werden.
 

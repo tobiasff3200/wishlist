@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Core{% endblock %}</title>
+    <link href="{% static 'core/css/output.css' %}" rel="stylesheet" type="text/css">
+    {% block head %}{% endblock %}
+</head>
+<body class="break-words hyphens-auto">
+{% block content %}
+{% endblock %}
+</body>
+</html>
