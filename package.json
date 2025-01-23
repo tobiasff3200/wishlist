@@ -3,7 +3,7 @@
     "daisyui": "^4.9.0"
   },
   "scripts": {
-    "tailwind": "npx tailwindcss -i static/wishlist/css/main.css -o ../static/core/css/output.css",
-    "tailwind-watch": "npx tailwindcss -i static/wishlist/css/main.css -o ../static/core/css/output.css --watch"
+    "tailwind": "npx tailwindcss -i static/core/css/main.css -o static/core/css/output.css",
+    "tailwind-watch": "npx tailwindcss -i static/core/css/main.css -o static/core/css/output.css --watch"
   }
 }

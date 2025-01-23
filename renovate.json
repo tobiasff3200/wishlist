@@ -3,11 +3,11 @@
   "addLabels": [
     "dependencies"
   ],
+  "reviewersFromCodeOwners": true,
   "dependencyDashboard": true,
   "extends": [
     "config:recommended",
-    "mergeConfidence:all-badges",
-    "schedule:weekly"
+    "mergeConfidence:all-badges"
   ],
   "lockFileMaintenance": {
     "enabled": true
@@ -25,10 +25,5 @@
       ]
     }
   ],
-  "prConcurrentLimit": 4,
-  "reviewers": [
-    "Tobiasff3200"
-  ],
-  "reviewersFromCodeOwners": true,
-  "reviewersSampleSize": 1
+  "prConcurrentLimit": 4
 }

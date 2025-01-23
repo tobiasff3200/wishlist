@@ -5,6 +5,7 @@ from wishlist import views
 urlpatterns = [
     path("", views.home_view, name="home_view"),
     path("wish/<int:list_owner>", views.wishListView, name="wishList"),
+    path("wish2/<int:pk>", views.wishListView, name="wishList2"),
     path(
         "wish/add/<int:list_owner>", views.CreateWishView.as_view(), name="createWish"
     ),
