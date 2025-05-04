@@ -1,0 +1,4 @@
+include:
+  - project: tobiasff3200/ci-cd
+    file:
+      - .gitlab-ci.yml
