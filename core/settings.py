@@ -13,8 +13,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from os import environ
 from pathlib import Path
 
-import sentry_sdk
-
 env = environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -43,6 +41,10 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.nextcloud",
     "wishlist",
 ]
 
@@ -55,10 +57,12 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "core.urls"
 
+FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -86,6 +90,13 @@ DATABASES = {
         "NAME": BASE_DIR / "db/db.sqlite3",
     }
 }
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by email
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -146,6 +157,7 @@ DEFAULT_FROM_EMAIL = env.get("FROM_EMAIL")
 
 ERROR_REPORTING = env.get("ERROR_REPORTING", False)
 if ERROR_REPORTING and not DEBUG:
+    import sentry_sdk
     sentry_sdk.init(
         dsn="https://1ea494bd0994743aed627c8dbf46183b@o4508272990093312.ingest.de.sentry.io/4508295867990096",
         traces_sample_rate=1.0,

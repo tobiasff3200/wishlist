@@ -1,0 +1,26 @@
+{% extends "base-public.html" %}
+{% load i18n %}
+{% load allauth account %}
+
+{% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %}
+
+{% block content %}
+    <h1 class="card-title">
+        {% trans "Sign In" %}
+    </h1>
+    {% if not SOCIALACCOUNT_ONLY %}
+        <form method="post" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ redirect_field }}
+            <button class="btn btn-primary" type="submit">
+                {% trans "Sign In" %}
+            </button>
+        </form>
+    {% endif %}
+    {% if SOCIALACCOUNT_ENABLED %}
+        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    {% endif %}
+{% endblock content %}

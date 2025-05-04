@@ -1,0 +1,17 @@
+{% extends "base-public.html" %}
+{% load i18n %}
+{% load allauth %}
+
+{% block head_title %}
+    {% trans "Third-Party Login Failure" %}
+{% endblock head_title %}
+
+{% block content %}
+    <h1 class="card-title">
+        {% trans "Third-Party Login Failure" %}
+    </h1>
+
+    <p>
+        {% trans "An error occurred while attempting to login via your third-party account." %}
+    </p>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load email_hash %}
+
+{% block content-base %}
+    <div class="m-4">
+        {% block content %}
+        {% endblock content %}
+    </div>
+{% endblock content-base %}
+
+{% block account_picture %}
+    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full">
+            <img src="https://www.gravatar.com/avatar/{{ user|email_hash }}?d=identicon" alt="Avatar" />
+        </div>
+    </div>
+{% endblock %}
