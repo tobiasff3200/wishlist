@@ -1,0 +1,25 @@
+{% extends "base-internal.html" %}
+{% load allauth i18n %}
+
+{% block head_title %}
+    {% trans "Sign Out" %}
+{% endblock head_title %}
+
+{% block content %}
+    <h1 class="text-2xl font-bold mb-2">
+        {% trans "Sign Out" %}
+    </h1>
+
+    <p>
+        {% trans 'Are you sure you want to sign out?' %}
+    </p>
+
+    <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        {{ redirect_field }}
+        
+        <button type="submit" class="btn btn-primary mt-4">
+            {% trans 'Sign Out' %}
+        </button>
+    </form>
+{% endblock content %}

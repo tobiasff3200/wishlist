@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content-base %}
+    <div class="card card-border bg-base-100 w-fit shadow-xl m-auto mt-8">
+        <div class="card-body items-center text-center">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+{% endblock content-base %}

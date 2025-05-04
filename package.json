@@ -1,9 +1,13 @@
 {
-  "dependencies": {
-    "daisyui": "^4.9.0"
-  },
   "scripts": {
-    "tailwind": "npx tailwindcss -i static/core/css/main.css -o static/core/css/output.css",
+    "tailwind": "npx @tailwindcss/cli -i static/core/css/main.css -o static/core/css/output.css",
     "tailwind-watch": "npx tailwindcss -i static/core/css/main.css -o static/core/css/output.css --watch"
+  },
+  "devDependencies": {
+    "daisyui": "^5.0.0-beta.2"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.0",
+    "tailwindcss": "^4.0.0"
   }
 }

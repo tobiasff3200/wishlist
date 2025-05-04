@@ -1,0 +1,58 @@
+{% extends "base-internal.html" %}
+{% load i18n %}
+{% load allauth %}
+
+{% block head_title %}
+    {% trans "Account Connections" %}
+{% endblock head_title %}
+
+{% block content %}
+    <h1 class="text-2xl font-bold mb-2">
+        {% trans "Account Connections" %}
+    </h1>
+    {% if form.accounts %}
+        <p>
+            {% blocktrans %}You can sign in to your account using any of the following third-party
+                accounts:{% endblocktrans %}
+        </p>
+
+        <form method="post" action="{% url 'socialaccount_connections' %}" class="mt-2">
+            {% csrf_token %}
+            {% for acc in form.fields.account.choices %}
+                {% with account=acc.0.instance.get_provider_account %}
+                    <fieldset class="fieldset">
+                        <label class="fieldset-label">
+                            <input type="radio" class="radio" name="account" value="{{ account.account.pk }}"
+                                   id="id_account_{{ account.account.pk }}" />
+                            {{ account }}
+                            <span class="badge badge-primary">{{ account.get_brand.name }}</span>
+                        </label>
+                    </fieldset>
+                {% endwith %}
+            {% endfor %}
+            <button type="submit" class="btn btn-error mt-2">
+                {% trans 'Remove' %}
+            </button>
+        </form>
+    {% else %}
+        <div role="alert" class="alert alert-info">
+            <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    class="h-6 w-6 shrink-0 stroke-current">
+                <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{% trans 'You currently have no third-party accounts connected to this account.' %}</span>
+        </div>
+    {% endif %}
+    <h2 class="text-xl font-bold mb-2 mt-4">
+        {% trans 'Add a Third-Party Account' %}
+    </h2>
+    {% include "socialaccount/snippets/provider_list.html" with process="connect" %}
+    {% include "socialaccount/snippets/login_extra.html" %}
+{% endblock content %}

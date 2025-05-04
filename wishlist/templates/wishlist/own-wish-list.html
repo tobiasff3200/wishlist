@@ -8,16 +8,8 @@
     von {{ list_owner }}
 {% endblock %}
 
-{% block navbar_extra %}
-    <li>
-        <a href="{% url 'createWish' list_owner.id %}" class="hidden sm:flex">
-            Neuen Wunsch hinzufügen
-        </a>
-    </li>
-{% endblock %}
-
 {% block content %}
-    <a href="{% url 'createWish' list_owner.id %}" class="btn w-full mb-4 lg:hidden">Neuen Wunsch hinzufügen</a>
+    <a href="{% url 'createWish' list_owner.id %}" class="btn w-full mb-4">Neuen Wunsch hinzufügen</a>
     <div>
         {% for wish in wishes %}
             {% include "wishlist/wish_template.html" with wish=wish %}
