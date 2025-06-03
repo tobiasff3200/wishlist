@@ -5,15 +5,15 @@
   ],
   "dependencyDashboard": true,
   "extends": [
-    "config:base",
-    "github>whitesource/merge-confidence:beta",
+    "config:recommended",
+    "mergeConfidence:all-badges",
     "schedule:weekly"
   ],
   "lockFileMaintenance": {
     "enabled": true
   },
   "npm": {
-    "stabilityDays": 3
+    "minimumReleaseAge": "3 days"
   },
   "packageRules": [
     {
