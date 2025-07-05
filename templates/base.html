@@ -1,11 +1,10 @@
 {% load i18n %}
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{% static 'core/css/output.css' %}" rel="stylesheet" type="text/css">
-    <meta http-equiv="refresh" content="10">
     <title>
         {% block head_title %}
         {% endblock head_title %}
@@ -30,7 +29,7 @@
             <a href="{% url 'home_view' %}" class="btn btn-ghost">
                 <div class="avatar">
                     <div class="w-10 rounded">
-                        <img src="{% static 'wishlist/images/logo.png' %}" />
+                        <img src="{% static 'wishlist/images/logo.png' %}" alt="Logo"/>
                     </div>
                 </div>
                 <p class="m-auto">
@@ -40,8 +39,10 @@
                 </p>
             </a>
         </div>
-        <div class="flex-1">
-            <div class="w-full flex justify-end px-2">
+
+        {% if user.is_authenticated %}
+            <div class="flex-1">
+                <div class="w-full flex justify-end px-2">
                     <div class="dropdown">
                         <div tabindex="0" role="button" class="btn btn-outline m-1">Wunschlisten</div>
                         <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
@@ -57,24 +58,27 @@
                             {% endfor %}
                         </ul>
                     </div>
+                </div>
             </div>
-        </div>
-        <div class="flex gap-2">
+        {% endif %}
 
+        <div class="flex gap-2">
             <div class="dropdown dropdown-end">
                 {% block account_picture %}
-                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                        <div class="w-10 rounded-full">
-                            <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                    {% if user.is_authenticated %}
+                        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                            <div class="w-10 rounded-full">
+                                <img
+                                        alt="Tailwind CSS Navbar component"
+                                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"/>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endblock account_picture %}
 
-                <ul tabindex="0"
-                    class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                    {% if user.is_authenticated %}
+                {% if user.is_authenticated %}
+                    <ul tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
                         {% url 'account_email' as email_url_ %}
                         {% if email_url_ %}
                             <li>
@@ -111,15 +115,8 @@
                                 <a href="{{ logout_url_ }}">{% trans "Sign Out" %}</a>
                             </li>
                         {% endif %}
-                    {% else %}
-                        {% url 'account_login' as login_url_ %}
-                        {% if login_url_ %}
-                            <li>
-                                <a href="{{ login_url_ }}">{% trans "Sign In" %}</a>
-                            </li>
-                        {% endif %}
-                    {% endif %}
-                </ul>
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>
