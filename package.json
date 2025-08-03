@@ -4,7 +4,7 @@
     "tailwind-watch": "npx tailwindcss -i static/core/css/main.css -o static/core/css/output.css --watch"
   },
   "devDependencies": {
-    "daisyui": "^5.0.0-beta.2"
+    "daisyui": "^5.0.0"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.0",
