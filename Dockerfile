@@ -3,7 +3,7 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-FROM node:22 AS node
+FROM node:24 AS node
 WORKDIR /app
 COPY package.json package-lock.json /app/
 RUN npm ci
