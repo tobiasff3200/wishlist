@@ -3,8 +3,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
+from django.db import connections
 from django.forms import modelform_factory
-from django.http import HttpResponseRedirect, HttpRequest
+from django.http import HttpResponseRedirect, HttpRequest, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
@@ -18,6 +19,15 @@ def home_view(request):
     return HttpResponseRedirect(
         reverse("wishList", kwargs={"list_owner": request.user.id})
     )
+
+
+def health_check(request):
+    # Check database connections
+    db_ok = all(conn.cursor().execute("SELECT 1") for conn in connections.all())
+
+    status = db_ok # add more checks if applicable
+    status_code = 200 if status else 503
+    return JsonResponse({"status": "ok" if status else "unhealthy"}, status=status_code)
 
 
 def get_all_users_filtered(request: HttpRequest) -> list[User]:
