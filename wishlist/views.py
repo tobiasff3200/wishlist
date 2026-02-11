@@ -78,11 +78,19 @@ class CreateWishView(LoginRequiredMixin, CreateView):
     template_name = "wishlist/create-wish.html"
     form_class = modelform_factory(
         Wish,
-        fields=("text", "link", "quantity", "depends_on"),
-        labels={"text": "Wunsch", "link": "Link", "quantity": "Anzahl"},
+        fields=("text", "description", "link", "quantity", "depends_on"),
+        labels={
+            "text": "Wunsch",
+            "description": "Beschreibung",
+            "link": "Link",
+            "quantity": "Anzahl",
+        },
         widgets={
             "text": django.forms.TextInput(
                 attrs={"class": "input input-bordered w-full max-w-xs"}
+            ),
+            "description": django.forms.Textarea(
+                attrs={"class": "input textarea field-sizing-fixed w-full max-w-xs"}
             ),
             "link": django.forms.URLInput(
                 attrs={"class": "input input-bordered w-full max-w-xs"}
@@ -110,6 +118,7 @@ class CreateWishView(LoginRequiredMixin, CreateView):
             data = form.cleaned_data
             wish = Wish(
                 text=data.get("text"),
+                description=data.get("description"),
                 link=data.get("link"),
                 quantity=data.get("quantity"),
                 owner=self.request.user,
@@ -198,11 +207,19 @@ class EditWishView(LoginRequiredMixin, IsWishOwnerMixin, UpdateView):
     template_name = "wishlist/edit-wish.html"
     form_class = modelform_factory(
         Wish,
-        fields=("text", "link", "quantity", "depends_on"),
-        labels={"text": "Wunsch", "link": "Link", "quantity": "Anzahl"},
+        fields=("text", "description", "link", "quantity", "depends_on"),
+        labels={
+            "text": "Wunsch",
+            "description": "Beschreibung",
+            "link": "Link",
+            "quantity": "Anzahl",
+        },
         widgets={
             "text": django.forms.TextInput(
                 attrs={"class": "input input-bordered w-full max-w-xs"}
+            ),
+            "description": django.forms.Textarea(
+                attrs={"class": "input textarea field-sizing-fixed w-full max-w-xs"}
             ),
             "link": django.forms.URLInput(
                 attrs={"class": "input input-bordered w-full max-w-xs"}

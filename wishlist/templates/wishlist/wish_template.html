@@ -47,6 +47,9 @@
                    rel="noopener noreferrer">Link</a>
             </div>
         {% endif %}
+        {% if wish.description %}
+                <p>{{wish.description}}</p>
+        {% endif %}
         {% if not readonly %}
             <div class="card-actions">
                 {% if wish.owner == user %}

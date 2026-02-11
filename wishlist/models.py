@@ -11,6 +11,7 @@ def get_sentinel_user():
 
 class Wish(models.Model):
     text = models.TextField(max_length=1000)
+    description = models.TextField(max_length=1000, blank=True)
     link = models.URLField(verbose_name="Link", null=True, blank=True)
     quantity = models.IntegerField(default=1, validators=[MinValueValidator(1)])
     owner = models.ForeignKey(User, on_delete=models.SET(get_sentinel_user))
@@ -19,8 +20,13 @@ class Wish(models.Model):
         User, related_name="reserved_wishes", through="Reservation"
     )
     favorite = models.BooleanField(default=False)
-    depends_on = models.ForeignKey('Wish', on_delete=models.SET_NULL, related_name="dependent_wishes", null=True,
-                                   blank=True)
+    depends_on = models.ForeignKey(
+        "Wish",
+        on_delete=models.SET_NULL,
+        related_name="dependent_wishes",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         ordering = ("-favorite",)

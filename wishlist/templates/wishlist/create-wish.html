@@ -15,6 +15,13 @@
                             </label>
                             {{ form.text }}
                         </div>
+                         <div class="form-control w-full max-w-xs">
+                            <label class="label" for="{{ form.description.id_for_label }}">
+                                <span class="label-text">{{ form.description.label_tag }}</span>
+                                <span class="label-text-alt">{{ form.description.errors }}</span>
+                            </label>
+                            {{ form.description }}
+                        </div>
                         <div class="form-control w-full max-w-xs">
                             <label class="label" for="{{ form.link.id_for_label }}">
                                 <span class="label-text">{{ form.link.label_tag }}</span>
