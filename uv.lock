@@ -324,7 +324,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "django", specifier = "==5.2.11" },
+    { name = "django", specifier = "==6.0.3" },
     { name = "django-allauth", extras = ["socialaccount"], specifier = "==65.14.3" },
     { name = "gunicorn", specifier = "==23.0.0" },
     { name = "requests", specifier = "==2.32.5" },
