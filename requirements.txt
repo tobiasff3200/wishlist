@@ -1,4 +1,4 @@
-Django==6.0.3
+Django==6.0.4
 django-allauth[socialaccount]==65.15.0
 requests==2.33.1
 whitenoise==6.12.0
