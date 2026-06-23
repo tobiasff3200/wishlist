@@ -3,4 +3,4 @@ django-allauth[socialaccount]==65.16.1
 requests==2.33.1
 whitenoise==6.12.0
 gunicorn==26.0.0
-sentry-sdk[django]==2.58.0
+sentry-sdk[django]==2.63.0
