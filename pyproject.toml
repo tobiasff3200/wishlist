@@ -9,6 +9,6 @@ dependencies = [
     "django-allauth[socialaccount]==65.18.0",
     "gunicorn==26.0.0",
     "requests==2.34.2",
-    "sentry-sdk[django]==2.63.0",
+    "sentry-sdk[django]==2.64.0",
     "whitenoise==6.12.0",
 ]
