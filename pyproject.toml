@@ -7,7 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "django==6.1",
     "django-allauth[socialaccount]==65.19.1",
-    "gunicorn==26.1.0",
+    "gunicorn==26.2.0",
     "requests==2.34.2",
     "sentry-sdk[django]==2.68.0",
     "whitenoise==6.12.0",
